@@ -1,0 +1,2 @@
+# Leetcode
+Sucking DSA
