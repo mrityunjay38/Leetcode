@@ -3,7 +3,7 @@
  */
 
 /**
- * Solution: T=O(n) By swapping non-zero to front with first encountered zero of current cycle;
+ * Solution 1: T=O(n^2) By swapping non-zero to front with first encountered zero of current cycle;
  */
 
 /**
@@ -23,4 +23,18 @@ var moveZeroes = function (nums, currentIndex = 0) {
   }
 
   moveZeroes(nums, ++currentIndex);
+};
+
+/**
+ * Solution 2: T=O(n) Using two pointer index and swapping non-zeroes with last encountered 0's index
+ */
+
+var moveZeroes = function (nums) {
+  for (let i = 0, j = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+      [nums[i], nums[j]] = [nums[j], nums[i]];
+      j++;
+    }
+  }
+  return nums;
 };
