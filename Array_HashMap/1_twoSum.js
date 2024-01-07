@@ -9,7 +9,7 @@
  */
 
 /**
- * Solution:
+ * Solution 1: O(n^2) Brute Force
  */
 
 const twoSum = function (nums, target) {
@@ -30,4 +30,22 @@ const twoSum = function (nums, target) {
 const findRemainder = (intArray, remainder) => {
   const index = intArray.indexOf(remainder);
   return index;
+};
+
+/**
+ * Solution 2: O(n) Optimal using hashmap
+ */
+
+const twoSum = function (nums, target) {
+  const map = new Map();
+  let i = 0;
+
+  while (i < nums.length) {
+    if (map.has(target - nums[i])) {
+      return [i, map.get(target - nums[i])];
+    } else {
+      map.set(nums[i], i);
+    }
+    i++;
+  }
 };
