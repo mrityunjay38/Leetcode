@@ -33,5 +33,5 @@ var lengthOfLongestSubstring = function (s) {
 
   maxSubStr = maxSubStr.length < currSubStr.length ? currSubStr : maxSubStr;
 
-  return s.length < 2 ? s.length : maxSubStr.length;
+  return maxSubStr.length;
 };
