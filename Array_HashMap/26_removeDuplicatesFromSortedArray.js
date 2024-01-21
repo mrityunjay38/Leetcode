@@ -36,3 +36,24 @@ var removeDuplicates = function (nums) {
 
   return j;
 };
+
+/**
+ * Solution 3: Two pointer comparison O(n), since array is already sorted in non-decreasing order.
+ */
+
+var removeDuplicates = function (nums) {
+  let i = 1,
+    j = 1,
+    count = 1;
+
+  while (i < nums.length) {
+    if (nums[i] == nums[i - 1]) count++;
+    else count = 1;
+
+    if (count === 1) nums[j++] = nums[i];
+
+    i++;
+  }
+
+  return j;
+};
