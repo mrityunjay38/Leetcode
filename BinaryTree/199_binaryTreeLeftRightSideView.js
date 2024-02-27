@@ -42,3 +42,32 @@ var rightSideView = function (root) {
 
   return result;
 };
+
+/**
+ * Problem: xxx Binary Tree Left Side View
+ * GFG - https://www.geeksforgeeks.org/problems/left-view-of-binary-tree/1
+ */
+
+var leftSideView = function (root) {
+  const map = new Map();
+  const dfs = (node, level) => {
+    if (!node) return;
+
+    if (!map.has(level)) {
+      map.set(level, node.data);
+    }
+
+    if (node.left) dfs(node.left, level + 1);
+    if (node.right) dfs(node.right, level + 1);
+  };
+
+  const result = [];
+  if (!root) return result;
+  dfs(root, 0);
+
+  map.forEach((val, key) => {
+    result.push(val);
+  });
+
+  return result;
+};
