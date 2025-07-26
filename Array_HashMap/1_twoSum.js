@@ -36,16 +36,16 @@ const findRemainder = (intArray, remainder) => {
  * Solution 2: O(n) Optimal using hashmap
  */
 
-const twoSum = function (nums, target) {
-  const map = new Map();
-  let i = 0;
-
-  while (i < nums.length) {
-    if (map.has(target - nums[i])) {
-      return [i, map.get(target - nums[i])];
-    } else {
-      map.set(nums[i], i);
+const twoSum = (nums, target) => {
+  const ans = [],
+    hash = {};
+  for (let i = 0; i < nums.length; i++) {
+    const diff = target - nums[i];
+    if (diff in hash) {
+      ans.push(hash[diff]);
+      ans.push(i);
     }
-    i++;
+    hash[nums[i]] = i;
   }
+  return ans;
 };
