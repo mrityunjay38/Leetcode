@@ -1,2 +1,2 @@
 # Leetcode
-Sucking DSA
+Learning DSA
