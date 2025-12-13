@@ -19,6 +19,7 @@
  */
 
 /**
+ * Solution1
  * @param {TreeNode} root
  * @return {number[]}
  */
@@ -70,5 +71,40 @@ var boundaryOfBinaryTree = function (root) {
   leftPath(root.left, boundary);
   leaves(root, boundary);
   rightPath(root.right, boundary);
+  return boundary;
+};
+
+/**
+ * Solution2: T=O(n) to find leafs
+ */
+
+var boundaryOfBinaryTree = function (root) {
+  let boundary = [];
+
+  function leftTraverse(root) {
+    if (!root) return;
+    if (root.left || root.right) boundary.push(root.val);
+    if (root.left) leftTraverse(root.left);
+    else if (root.right) leftTraverse(root.right);
+  }
+
+  function leafs(root) {
+    if (!root) return;
+    if (!root.left && !root.right) boundary.push(root.val);
+    leafs(root.left);
+    leafs(root.right);
+  }
+
+  function rightTraverse(root) {
+    if (!root) return;
+    if (root.right) rightTraverse(root.right);
+    else if (root.left) rightTraverse(root.left);
+    if (root.left || root.right) boundary.push(root.val);
+  }
+
+  if (root.left || root.right) boundary.push(root.val);
+  leftTraverse(root.left);
+  leafs(root);
+  rightTraverse(root.right);
   return boundary;
 };
