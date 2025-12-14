@@ -71,3 +71,34 @@ var leftSideView = function (root) {
 
   return result;
 };
+
+/** Solution3: Level order traversal with BFS - Iterative T=O(n)
+ * 1. Travel from left-to-right
+ * 2. push last element from each level into ans
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+
+var rightSideView = function (root) {
+  const ans = [];
+  if (!root) return ans;
+
+  const queue = [root];
+  let index = 0;
+
+  while (index < queue.length) {
+    const size = queue.length - index;
+    const level = new Array(size);
+
+    for (let i = 0; i < size; i++) {
+      const node = queue[index++];
+      level[i] = node.val;
+
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    ans.push(level[level.length - 1]);
+  }
+
+  return ans;
+};
