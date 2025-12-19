@@ -53,7 +53,7 @@ var topView = function (root) {
 };
 
 /**
- * Solution2: DFS top view, T=O(N)
+ * Solution2: DFS top view, T=nO(log n)
  */
 
 class Solution {
