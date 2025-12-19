@@ -43,11 +43,12 @@ var rightSideView = function (root) {
   return result;
 };
 
-/**
- * Problem: xxx Binary Tree Left Side View
+/** Solution
+ * Problem: xxx Binary Tree Left Side View, T=O(n)
  * GFG - https://www.geeksforgeeks.org/problems/left-view-of-binary-tree/1
  */
 
+// DFS
 var leftSideView = function (root) {
   const map = new Map();
   const dfs = (node, level) => {
@@ -71,6 +72,33 @@ var leftSideView = function (root) {
 
   return result;
 };
+
+//BFS
+class Solution {
+  leftView(root) {
+    const result = [];
+    if (!root) return result;
+
+    const queue = [root];
+    let index = 0;
+
+    while (index < queue.length) {
+      const size = queue.length - index;
+      const level = new Array(size);
+
+      for (let i = 0; i < size; i++) {
+        const node = queue[index++];
+
+        if (i === 0) result.push(node.data);
+
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+      }
+    }
+
+    return result;
+  }
+}
 
 /** Solution3: Level order traversal with BFS - Iterative T=O(n)
  * 1. Travel from left-to-right
