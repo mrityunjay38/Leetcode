@@ -53,7 +53,7 @@ var topView = function (root) {
 };
 
 /**
- * Solution2: DFS top view, T=nO(log n)
+ * Solution2: DFS top view, T=O(nlog n)
  */
 
 class Solution {
@@ -94,31 +94,40 @@ class Solution {
 }
 
 /**
- * Solution: BFS Bottom View, T=O(N) using deque operations
+ * Solution: BFS Bottom View, T=O(N) using queue
  */
 
-var bottomView = function (root) {
-  const result = [];
-  if (!root) return result;
+class Solution {
+  bottomView(root) {
+    const result = [];
+    if (!root) return result;
 
-  const map = new Map();
-  const deque = [[root, 0]];
-  let minCol = 0,
-    maxCol = 0;
+    const queue = [[0, root]],
+      map = new Map();
+    let index = 0,
+      minCol = 0,
+      maxCol = 0;
 
-  while (deque.length) {
-    const [node, col] = deque.shift();
-    map.set(col, node.data);
+    while (index < queue.length) {
+      const [col, node] = queue[index++];
 
-    minCol = Math.min(minCol, col);
-    maxCol = Math.max(maxCol, col);
-    if (node.left) deque.push([node.left, col - 1]);
-    if (node.right) deque.push([node.right, col + 1]);
+      map.set(col, node.data);
+
+      if (node.left) {
+        queue.push([col - 1, node.left]);
+        minCol = Math.min(minCol, col - 1);
+      }
+
+      if (node.right) {
+        queue.push([col + 1, node.right]);
+        maxCol = Math.max(maxCol, col + 1);
+      }
+    }
+
+    for (let i = minCol; i <= maxCol; i++) {
+      result.push(map.get(i));
+    }
+
+    return result;
   }
-
-  for (let x = minCol; x <= maxCol; x++) {
-    result.push(map.get(x));
-  }
-
-  return result;
-};
+}
