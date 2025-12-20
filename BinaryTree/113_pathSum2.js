@@ -3,7 +3,7 @@
  */
 
 /**
- * Solution: T=O(N)
+ * Solution1: T=O(N)
  * 1. Both pre-order and post-order calculations required to add, check and remove elements
  */
 
@@ -37,8 +37,30 @@ var pathSum = function (root, targetSum) {
 
     dfs(node.left, sum, path);
     dfs(node.right, sum, path);
-    sum -= path.pop();
+    sum -= path.pop(); // useless to keep track of sum, since JS doesn't maintain reference, only path.pop is enough
   };
+
+  dfs(root);
+  return result;
+};
+
+/**
+ * Solution2: DFS T=O(N)
+ * Both preorder, postorder will work as long as checking for leaf nodes before consuming path as result
+ */
+
+var pathSum = function (root, targetSum) {
+  const result = [];
+  function dfs(root, sum = 0, path = []) {
+    if (!root) return;
+
+    sum += root.val;
+    path.push(root.val);
+    dfs(root.left, sum, path);
+    dfs(root.right, sum, path);
+    if (!root.left && !root.right && targetSum === sum) result.push([...path]);
+    path.pop();
+  }
 
   dfs(root);
   return result;
