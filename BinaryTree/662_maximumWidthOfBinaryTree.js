@@ -17,7 +17,7 @@
  */
 
 /**
- * Solution: T=O(N)
+ * Solution1: T=O(N)
  * 1. Idea is to index each node level and col wise.
  * Example:
  *          (1)
@@ -52,4 +52,44 @@ var widthOfBinaryTree = function (root) {
 
   dfs(root, 0, 0);
   return max;
+};
+
+/**
+ * Solution2: BFS, T=O(N)
+ * 1. indexing each node, starting with 0 or 1
+ * 2. keeping a pointer index to point current node in the queue
+ * 3. calculate size of current level
+ * 4. firstIndex = index of first node in the level
+ * 5. loop, normalize index by substracting first index to [0,1,2....]
+ * 6. calculate max width by lastIndex + 1 as after normlization first index will always be 0, hence no need for lastIndex - firstNormalizedIndex + 1
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var widthOfBinaryTree = function (root) {
+  let result = 0;
+  if (!root) return result;
+
+  const queue = [[1, root]];
+  let index = 0;
+
+  while (index < queue.length) {
+    const size = queue.length - index;
+    let [firstIndex, _] = queue[index];
+    let lastIndex = firstIndex;
+
+    for (let i = 0; i < size; i++) {
+      const [idx, node] = queue[index++];
+      const normalizedIdx = idx - firstIndex;
+      lastIndex = normalizedIdx;
+
+      if (node.left) queue.push([2 * normalizedIdx, node.left]);
+      if (node.right) queue.push([2 * normalizedIdx + 1, node.right]);
+    }
+
+    result = Math.max(result, lastIndex + 1);
+  }
+
+  return result;
 };
