@@ -35,7 +35,48 @@ var countNodes = function (root) {
 };
 
 /**
- * Solution 2: T=O(log^2 N) ~ O(d^2)
+ * Solution2: Height-based divide & conquer (Complete Binary Tree)
+ * Time Complexity: O(log² N)
+ *
+ * For a complete binary tree:
+ * - Compute leftmost height and rightmost height by walking only one path each.
+ * - If both heights are equal, the subtree is a perfect binary tree.
+ *   Its node count is (2^height - 1), computed efficiently as (1 << height) - 1.
+ * - If heights differ, recursively count nodes in left and right subtrees:
+ *   1 + count(left) + count(right).
+ *
+ * Height computation costs O(log N) and recursion depth is O(log N),
+ * resulting in total time complexity O(log² N).
+ */
+
+var countNodes = function (root) {
+  function getHeight(root, left) {
+    let count = 0;
+    while (root) {
+      count++;
+      root = left ? root.left : root.right;
+    }
+    return count;
+  }
+
+  function calcHeight(root) {
+    if (!root) return 0;
+
+    const left = getHeight(root.left, true);
+    const right = getHeight(root.right, false);
+
+    if (left === right) return (1 << (left + 1)) - 1;
+
+    return 1 + calcHeight(root.left) + calcHeight(root.right);
+  }
+
+  return calcHeight(root);
+};
+
+/**
+ *  **Not easy to come up with**
+ *
+ * Solution 3: T=O(log^2 N) ~ O(d^2)
  * Return 0 if the tree is empty.
  * Compute the tree depth d.
  * Return 1 if d == 0.
