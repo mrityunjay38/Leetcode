@@ -73,13 +73,88 @@ var deserialize = function (data) {
  */
 
 /**
- * Solution 2:
+ * Solution2: BFS Level Order Traversal, T=O(N), S=O(N)
+ *
+ * Serialize:
+ * - Perform level order traversal
+ * - Append node value to string
+ * - Use a special marker (e.g. "N") for null nodes
+ *
+ * Deserialize:
+ * 1. Split serialized string into an array
+ * 2. Use an index pointer to iterate over values
+ * 3. Create root from first value and push into queue
+ * 4. While queue is not empty:
+ *    - Pop current node
+ *    - If next value is not "N", create left node and enqueue
+ *    - If next value is not "N", create right node and enqueue
+ * 5. Return root
  */
 
+/**
+ * Encodes a tree to a single string.
+ *
+ * @param {TreeNode} root
+ * @return {string}
+ */
 var serialize = function (root) {
-  return JSON.stringify(root);
+  if (!root) return "";
+
+  const string = [];
+  const queue = [root];
+  let index = 0;
+  while (index < queue.length) {
+    const node = queue[index++];
+    if (node == null) {
+      string.push("N");
+      continue;
+    }
+    string.push(`${node.val}`);
+    queue.push(node.left);
+    queue.push(node.right);
+  }
+
+  return string.join(",");
 };
 
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
 var deserialize = function (data) {
-  return JSON.parse(data);
+  if (!data) return null;
+
+  const values = data.split(",");
+  let i = 0;
+  let qIndex = 0;
+
+  const root = new TreeNode(parseInt(values[i++], 10));
+  const queue = [root];
+
+  while (qIndex < queue.length) {
+    const node = queue[qIndex++];
+
+    // Left
+    if (values[i] !== "N") {
+      node.left = new TreeNode(parseInt(values[i], 10));
+      queue.push(node.left);
+    }
+    i++;
+
+    // Right
+    if (values[i] !== "N") {
+      node.right = new TreeNode(parseInt(values[i], 10));
+      queue.push(node.right);
+    }
+    i++;
+  }
+
+  return root;
 };
+
+/**
+ * Your functions will be called as such:
+ * deserialize(serialize(root));
+ */
