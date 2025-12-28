@@ -18,10 +18,15 @@
  */
 
 /**
- * Solution: T=O(N), even though solution of #236 will work here as well but Binary Search Tree has added benefit of reducing/eliminating search space.
- * 1. If both p, q are less than current node helps to ignore right of current node.
- * 2. If both p, q are greater than current node, then it helps to ignore left of current node.
- * 3. Else if both are on two different side of current node, hence current node is the lowest common ancestor of p, q;
+ * Solution 1: Recursive traversal leveraging BST ordering
+ *
+ * Time: O(h), where h is the height of the BST
+ * Space: O(h) due to recursion stack
+ *
+ * 1. If both p and q are smaller than current node, move to left subtree.
+ * 2. If both p and q are greater than current node, move to right subtree.
+ * 3. Otherwise (they lie on different sides or one equals the current node),
+ *    the current node is the lowest common ancestor.
  */
 
 var lowestCommonAncestor = function (root, p, q) {
@@ -37,4 +42,22 @@ var lowestCommonAncestor = function (root, p, q) {
   };
 
   return dfs(root);
+};
+
+/**
+ * Solution 2: Iterative traversal leveraging BST ordering
+ *
+ * Time: O(h), where h is the height of the BST
+ * Space: O(1)
+ *
+ * Same logic as recursive solution, but avoids recursion stack.
+ */
+var lowestCommonAncestor = function (root, p, q) {
+  while (root) {
+    if (p.val < root.val && q.val < root.val) {
+      root = root.left;
+    } else if (p.val > root.val && q.val > root.val) {
+      root = root.right;
+    } else return root;
+  }
 };
