@@ -3,7 +3,7 @@
  */
 
 /**
- * Solution1: DFS, T=O(V+E), S=O(V)
+ * Solution1: DFS, T=O(V+E), S=O(V+E), since adj is prepared after traversing all the given directed dependencies
  * If cycle detected, can't finish all the courses,
  * else true and we don't have to apply topological sort at all for this problem
  * @param {number} numCourses
