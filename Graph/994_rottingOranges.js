@@ -9,6 +9,7 @@
 
 /**
  * Solution1: T=O(m x n), S=O(m x n), may hold all cells as rotten
+ * Multi-source BFS
  * find fresh orange count
  * find rotten oranges cells
  * start simulating rotting from rotten cells at once
