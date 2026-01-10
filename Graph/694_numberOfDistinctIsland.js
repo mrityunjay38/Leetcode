@@ -7,7 +7,7 @@
  * Solution1: DFS, T=O(m*n log (m*n)), S=O(m*n) + recursion stack
  * 1. Find all the islands with their cells
  * 2. normalize them with topLeft cell (lowest row wise) then (lowest col wise)
- * 3. sort normalized cells
+ * 3. sort normalized cells (ideally this won't be required if following same traversal path for all island, if two islands are identically their cells will always come identical to normalized version of its identical.)
  * 4. if two islands are same, normalized cells will overlap
  * 5. hence we can store them as a string inside a set to remove duplicate
  * 6. number of islands in final set will be number of distinct islands
